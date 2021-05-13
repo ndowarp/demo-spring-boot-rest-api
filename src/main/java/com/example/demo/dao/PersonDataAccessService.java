@@ -51,6 +51,17 @@ public class PersonDataAccessService implements PersonDao {
     }
 
     @Override
+    public boolean existById(UUID id) {
+        final String sql =  "SELECT count(id) FROM person WHERE id = ?";
+        boolean exists = true;
+        int count = jdbcTemplate.queryForObject(sql, new Object[]{id}, Integer.class);
+        if (count <= 0) {
+            exists = false;
+        }
+        return exists;
+    }
+
+    @Override
     public int deletePersonById(UUID id) {
         final String sql = "DELETE FROM person WHERE id = ?";
         Object[] args = new Object[] {id};

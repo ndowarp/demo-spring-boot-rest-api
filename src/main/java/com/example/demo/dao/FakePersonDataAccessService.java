@@ -20,6 +20,11 @@ public class FakePersonDataAccessService implements PersonDao {
     }
 
     @Override
+    public int insertPerson(Person person) {
+        return 0;
+    }
+
+    @Override
     public List<Person> selectAllPeople() {
         return DB;
     }
@@ -53,5 +58,10 @@ public class FakePersonDataAccessService implements PersonDao {
                     return 0;
                 })
                 .orElse(0);
+    }
+
+    @Override
+    public boolean existById(UUID id) {
+        return false;
     }
 }

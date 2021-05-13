@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.PersonDao;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +15,7 @@ import java.util.UUID;
 public class PersonService {
 
     private final PersonDao personDao;
+
 
     @Autowired
     public PersonService(@Qualifier("postgres") PersonDao personDao) {
@@ -29,6 +31,9 @@ public class PersonService {
     }
 
     public Optional<Person> getPersonById(UUID id) {
+        if (!personDao.existById(id)){
+            throw new NotFoundException("User does not exist");
+        }
         return personDao.selectPersonById(id);
     }
 
